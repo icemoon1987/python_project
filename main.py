@@ -64,7 +64,12 @@ def init(conf_file):
         os.mkdir(result_dir)
 
     # init logging
-    logging.basicConfig(level="INFO", filename="%s/%s.%s" % (log_dir, __file__, datetime.now().strftime("%Y%m%d")), filemode='a', format='%(asctime)s [%(levelname)s] [%(filename)s] [%(funcName)s] [%(lineno)d] %(message)s')
+    if conf_obj.get("debug_mode", False):
+        log_level = logging.DEBUG
+    else:
+        log_level = logging.INFO
+
+    logging.basicConfig(level=log_level, filename="%s/%s.%s" % (log_dir, __file__, datetime.now().strftime("%Y%m%d")), filemode='a', format='%(asctime)s [%(levelname)s] [%(filename)s] [%(funcName)s] [%(lineno)d] %(message)s')
 
     return conf_obj
 
